@@ -1,5 +1,4 @@
 import variaveis_globais
-import pandas as pd
 import ler_arquivo_externo
 import utilidades
 
