@@ -1,5 +1,7 @@
+import os
 import pandas as pd
 import filtros
+import path_arquivos
 
 
 class Utilidades:
@@ -38,3 +40,17 @@ class Utilidades:
         df.loc[len(df)+1, coluna] = df[coluna].sum()
 
         return df
+
+    def contador_arquivos_pasta(self, caminho_pasta):
+
+        p = path_arquivos.Path_arquivos()
+
+        contador = 0
+
+        for file in os.listdir(caminho_pasta):
+
+            contador += 1
+
+        return contador
+
+

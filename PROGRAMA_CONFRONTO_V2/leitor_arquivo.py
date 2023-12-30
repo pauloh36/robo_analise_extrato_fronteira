@@ -4,6 +4,8 @@ import path_arquivos
 import localiza_filial
 import logica_confronto
 import gravar_excel
+import validador
+import utilidades
 
 
 class Leitor_Arquivo():
@@ -13,12 +15,18 @@ class Leitor_Arquivo():
 
     def leitor_arquivo(self):
 
-        print('Localizando arquivos')
 
-        p = path_arquivos.Path_arquivos()
+
         localizaFilial = localiza_filial.Localiza_Filial()
         l = logica_confronto.Logica_confronto()
         g = gravar_excel.Gravar_excel()
+        p = path_arquivos.Path_arquivos()
+        v = validador.Validador()
+        u = utilidades.Utilidades()
+
+        v.validador_pasta_vazia(p.pasta_arquivo_confronto_original)
+
+        print('Localizando arquivos... \nQtde de arquivos: '+str(u.contador_arquivos_pasta(p.pasta_arquivo_confronto_original)))
 
         for file in os.listdir(p.pasta_arquivo_confronto_original):
 
@@ -29,9 +37,15 @@ class Leitor_Arquivo():
                 print('\n...............................')
                 print('\nArquivo encontrado - ' + str(file))
 
-                filial_atual, estado_atual, status = localizaFilial.localiza_filial(df_atual)
+                if v.validor_colunas(df_atual) != 41:
+                    print('ERRO - COLUNAS INVALIDAS VERIFIQUE\nARQUIVO : ' + file)
 
-                if status == 'ERRO':
+                    os.rename(os.path.join(p.pasta_arquivo_confronto_original, file),
+                              os.path.join(p.pasta_arquivo_confronto_original, '[ERRO-COLUNAS]' + file))
+
+                filial_atual, estado_atual, status_filial = localizaFilial.localiza_filial(df_atual)
+
+                if status_filial == 'ERRO':
                     os.rename(os.path.join(p.pasta_arquivo_confronto_original, file),
                               os.path.join(p.pasta_arquivo_confronto_original, '[ERRO-FILIAL]' + file))
 

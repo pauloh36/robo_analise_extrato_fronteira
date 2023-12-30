@@ -5,7 +5,7 @@ import relacao_filiais
 class Localiza_Filial():
 
     def __init__(self) -> None:
-        self.status = ''
+        self.status_filial = ''
 
     def localiza_filial(self, df):
 
@@ -25,13 +25,13 @@ class Localiza_Filial():
                 if filial == filial_dicionario:
                     estado = e
 
-                    l.status = 'OK'
+                    l.status_filial = 'OK'
 
         if estado == '':
 
             print('ERRO, FILIAL NÃO ENCONTRADA NO ARQUIVO')
-            l.status = 'ERRO'
+            l.status_filial = 'ERRO'
 
         print('Filial = ' + str(filial) + '\nEstado = ' + str(estado))
 
-        return filial, estado, l.status
+        return filial, estado, l.status_filial

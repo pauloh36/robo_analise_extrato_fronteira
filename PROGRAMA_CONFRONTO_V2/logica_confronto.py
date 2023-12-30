@@ -72,7 +72,8 @@ class Logica_confronto:
 
         # faço isso para complementar o frame principal para trazer todas as notas
 
-        df_notas_antecipado = df.loc[~df['Código Receita'].isin(c.dicionario_codigos_tributacao_st[estado]), ['Número nota', 'CNPJ']]
+        df_notas_antecipado = df.loc[
+            ~df['Código Receita'].isin(c.dicionario_codigos_tributacao_st[estado]), ['Número nota', 'CNPJ']]
 
         df_valor_sefaz_st = \
             df_valor_sefaz_st[['Número nota', 'CNPJ', 'Valor icms sefaz']].groupby(['Número nota', 'CNPJ'])[
@@ -133,7 +134,7 @@ class Logica_confronto:
 
         return df_analise
 
-    def logica_fora_mes(self, df , estado):
+    def logica_fora_mes(self, df, estado):
 
         print('Processando fora mês...')
 
