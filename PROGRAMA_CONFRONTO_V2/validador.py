@@ -40,3 +40,21 @@ class Validador:
 
         return contador_colunas
 
+    def validador_asterisco(self, df):
+
+        qtde_linhas_df = len(df)
+        qtde_asterisco = 0
+        status_asterisco = ''
+
+        for i in range(qtde_linhas_df):
+
+            if df.loc[i, 'Origem nota fiscal'] == '**********':
+                qtde_asterisco += 1
+
+        if qtde_linhas_df == qtde_asterisco:
+
+            status_asterisco = 'ERRO'
+
+
+        return status_asterisco
+
