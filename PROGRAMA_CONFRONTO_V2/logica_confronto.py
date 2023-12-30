@@ -16,11 +16,11 @@ class Logica_confronto:
         l = Logica_confronto()
 
         df_analise_st_final = l.logica_analise_st(df, l.logica_valor_sefaz_st(df, estado),
-                                                                l.logica_valor_atacadao_st(df))
+                                                  l.logica_valor_atacadao_st(df))
 
         l.dicionario_frames['ORIGINAL'] = df
         l.dicionario_frames['ASTERISCO'] = l.logica_asterisco(df, estado)
-        l.dicionario_frames['DIFAL'] = l.logica_difal(df_analise_st_final)
+        l.dicionario_frames['DIFAL'] = l.logica_difal(df)
         l.dicionario_frames['RETIDO'] = l.logica_retido_fornecedor(df_analise_st_final)
         l.dicionario_frames['ANALISE_ST'] = df_analise_st_final
 
@@ -34,7 +34,8 @@ class Logica_confronto:
 
         df_asterisco = df.loc[(df['Origem nota fiscal'] == '**********')]
 
-        df_asterisco = df_asterisco.loc[(df_asterisco['Código Receita']).isin(c.dicionario_codigos_tributacao_st[estado]) , f.colunas_informacoes_principais]
+        df_asterisco = df_asterisco.loc[(df_asterisco['Código Receita']).isin(
+            c.dicionario_codigos_tributacao_st[estado]), f.colunas_informacoes_principais]
 
         return df_asterisco
 
@@ -42,8 +43,9 @@ class Logica_confronto:
         print('Processando notas de difal...')
 
         classificao = cfop.Cfop()
+        f = filtros.Filtros()
 
-        df_difal = df.loc[(df['CFOP'].isin(classificao.cfop_uso_consumo))]
+        df_difal = df.loc[df['CFOP'].isin(classificao.cfop_uso_consumo), f.colunas_informacoes_principais]
 
         return df_difal
 
@@ -100,7 +102,7 @@ class Logica_confronto:
                                         how='left')
 
         df_valor_atacadao_st['ATACADAO_ST'] = (
-                    df_valor_atacadao_st['Valor icms atacadao'] / df_valor_atacadao_st['CONTADOR_CODS']).fillna(0)
+                df_valor_atacadao_st['Valor icms atacadao'] / df_valor_atacadao_st['CONTADOR_CODS']).fillna(0)
 
         df_valor_atacadao_st = df_valor_atacadao_st[['Número nota', 'CNPJ', 'ATACADAO_ST']]
 
@@ -120,6 +122,7 @@ class Logica_confronto:
 
         df_analise['DIVERGENCIA'] = df_analise['ATACADAO_ST'] - df_analise['Valor icms sefaz']
 
-        df_analise = pd.merge(u.informacoes_complementares_notas(df_original), df_analise, on=['Número nota', 'CNPJ'], how='left')
+        df_analise = pd.merge(u.informacoes_complementares_notas(df_original), df_analise, on=['Número nota', 'CNPJ'],
+                              how='left')
 
         return df_analise
