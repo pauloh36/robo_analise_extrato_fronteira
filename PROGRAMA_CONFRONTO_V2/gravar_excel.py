@@ -6,13 +6,16 @@ class Gravar_excel:
     def __init__(self) -> None:
         pass
 
-    def gravacao_excel(self, df_dicionario, filial, estado):
+    def gravacao_excel(self,  df_dicionario, file , filial, estado):
 
         print('Iniciando Gravação...')
 
         p = path_arquivos.Path_arquivos()
 
-        writer = pd.ExcelWriter(p.pasta_rescultado_confronto + '/RESULTADO' + '.xlsx', engine='xlsxwriter')
+        file = file.replace('.xlsx', '')
+        file = file.replace('.xls', '')
+
+        writer = pd.ExcelWriter(p.pasta_rescultado_confronto + '/' + estado + '_' + str(filial) + '_' + file + '_ANALISE' + '.xlsx', engine='xlsxwriter')
 
         for aba , df in df_dicionario.items():
 
@@ -20,4 +23,4 @@ class Gravar_excel:
 
         writer.close()
 
-        print('Gravação finalizada !!!')
+        print('Gravação finalizada - arquivo:  '+file)

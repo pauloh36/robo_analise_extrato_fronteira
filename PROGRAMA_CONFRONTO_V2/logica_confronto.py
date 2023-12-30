@@ -66,7 +66,9 @@ class Logica_confronto:
 
         df_valor_sefaz_st = df.loc[df['Código Receita'].isin(c.dicionario_codigos_tributacao_st[estado])]
 
-        df_notas_antecipado = df.loc[df['Código Receita'] == 1154, ['Número nota', 'CNPJ']]
+        # faço isso para complementar o frame principal para trazer todas as notas
+
+        df_notas_antecipado = df.loc[~df['Código Receita'].isin(c.dicionario_codigos_tributacao_st[estado]), ['Número nota', 'CNPJ']]
 
         df_valor_sefaz_st = \
             df_valor_sefaz_st[['Número nota', 'CNPJ', 'Valor icms sefaz']].groupby(['Número nota', 'CNPJ'])[
