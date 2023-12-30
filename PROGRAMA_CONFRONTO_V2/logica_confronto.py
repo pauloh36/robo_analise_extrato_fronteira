@@ -23,6 +23,7 @@ class Logica_confronto:
         l.dicionario_frames['DIFAL'] = l.logica_difal(df)
         l.dicionario_frames['RETIDO'] = l.logica_retido_fornecedor(df_analise_st_final)
         l.dicionario_frames['ANALISE_ST'] = df_analise_st_final
+        l.dicionario_frames['FORA_MES'] = l.logica_fora_mes(df, estado)
 
         return l.dicionario_frames
 
@@ -128,3 +129,18 @@ class Logica_confronto:
                               how='left')
 
         return df_analise
+
+    def logica_fora_mes(self, df , estado):
+
+        print('Processando fora mês...')
+
+        c = codigos_tributacao.Codigos_Tributacao()
+
+        frame_fora_mes = df[df['Código Receita'].isin(c.dicionario_codigos_tributacao_st[estado])]
+
+        frame_fora_mes['PERIODO'] = frame_fora_mes['Data efetivação'].str.split(pat="/", n=1).str[1]
+        frame_fora_mes['PERIODO'].fillna('NF_NAO_EFETIVADAS', inplace=True)
+
+        total_fora_mes = frame_fora_mes[['PERIODO', 'Valor icms sefaz']].groupby(['PERIODO']).sum().reset_index()
+
+        return total_fora_mes
