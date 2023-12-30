@@ -32,11 +32,14 @@ class Logica_confronto:
 
         c = codigos_tributacao.Codigos_Tributacao()
         f = filtros.Filtros()
+        u = utilidades.Utilidades()
 
         df_asterisco = df.loc[(df['Origem nota fiscal'] == '**********')]
 
         df_asterisco = df_asterisco.loc[(df_asterisco['Código Receita']).isin(
             c.dicionario_codigos_tributacao_st[estado]), f.colunas_informacoes_principais]
+
+        df_asterisco = u.soma_total_coluna(df_asterisco, 'Valor icms sefaz')
 
         return df_asterisco
 

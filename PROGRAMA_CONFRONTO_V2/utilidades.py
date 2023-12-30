@@ -32,3 +32,9 @@ class Utilidades:
         df_informacoes_notas = df_informacoes_notas.drop_duplicates(subset=['Número nota', 'CNPJ'], keep='first')
 
         return df_informacoes_notas
+
+    def soma_total_coluna(self, df , coluna):
+
+        df.loc[len(df)+1, coluna] = df[coluna].sum()
+
+        return df
