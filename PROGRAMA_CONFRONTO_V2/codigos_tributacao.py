@@ -12,4 +12,4 @@ class Codigos_Tributacao():
                                             }
         
         self.lista_codigos_atacadao_st = [702,703]
-        self.lista_codigos_atacadao_antecipado = [715]
+        self.lista_codigos_atacadao_antecipado = [710, 715]

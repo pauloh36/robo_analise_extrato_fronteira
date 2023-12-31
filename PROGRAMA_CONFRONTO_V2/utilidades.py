@@ -53,4 +53,11 @@ class Utilidades:
 
         return contador
 
+    def preencher_valores_vazios(self, df):
+
+        for i in df.columns:
+            df[i] = df[i].fillna(0)
+
+        return df
+
 
