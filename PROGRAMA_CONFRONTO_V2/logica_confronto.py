@@ -249,6 +249,15 @@ class Logica_confronto:
                                  on=['Número nota', 'CNPJ'],
                                  how='left')
 
+        # organizando a ordem das colunas
+
+        df_analise_st = df_analise_st[self.f.colunas_vizualizao_final_analise_resumo]
+
+        # filtro
+
+        df_analise_st = df_analise_st.loc[(df_analise_st['Origem nota fiscal'] != 'NF RETIDO FORNEC. / C PROVISAO') & (df_analise_st['Origem nota fiscal'] != 'NF RETIDO FORNECEDOR') & (df_analise_st['Origem nota fiscal'] != '**********') & (~df_analise_st['CFOP'].isin(self.classificao.cfop_uso_consumo))]
+
+
         return df_analise_st
 
     def logica_analise_completa(self, df_original, df_sefaz, df_atacadao_desmembrado):
@@ -264,6 +273,10 @@ class Logica_confronto:
                                              df_final_completo_analise,
                                              on=['Número nota', 'CNPJ'],
                                              how='left')
+
+        # organizando a ordem das colunas
+
+        df_final_completo_analise = df_final_completo_analise[self.f.colunas_vizualizao_final_analise_completo]
 
         return df_final_completo_analise
 
