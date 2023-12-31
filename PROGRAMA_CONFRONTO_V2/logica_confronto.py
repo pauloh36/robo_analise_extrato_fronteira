@@ -110,7 +110,7 @@ class Logica_confronto:
         return df_valor_atacadao_st
 
     def logica_valor_atacadao_antecipado(self, df):
-        print('Calculando valor de ICMS ST ATACADAO...')
+        print('Calculando valor de ICMS ANTECIPADO ATACADAO...')
 
         df_contador_cods_receita = self.u.contador_cods_receita_df(df)
 
@@ -141,7 +141,7 @@ class Logica_confronto:
         return df_valor_atacadao_antecipado
 
     def logica_valor_atacadao_desmembrado(self, df):
-        print('Calculando valor de ICMS ST ATACADAO...')
+        print('Calculando valor de ICMS ST ATACADAO DESMEMBRADO...')
 
         df_contador_cods_receita = self.u.contador_cods_receita_df(df)
 
